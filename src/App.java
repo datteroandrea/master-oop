@@ -1,4 +1,8 @@
 import java.util.*;
+import java.util.function.Function;
+
+import animali.Animal;
+import fabbrica.Factory;
 
 public class App {
     private static int AMOUNT = 10;
@@ -17,7 +21,7 @@ public class App {
 
             @Override
             public int compare(Animal o1, Animal o2) {
-                return (o1.age - o2.age);
+                return (o1.getAge() - o2.getAge());
             }
             
         });
@@ -31,7 +35,7 @@ public class App {
 
             @Override
             public int compare(Animal o1, Animal o2) {
-                return (o2.age - o1.age);
+                return (o2.getAge() - o1.getAge());
             }
             
         });
@@ -45,7 +49,7 @@ public class App {
 
             @Override
             public int compare(Animal o1, Animal o2) {
-                return o2.name.compareTo(o1.name);
+                return o2.getName().compareTo(o1.getName());
             }
             
         });
@@ -59,7 +63,7 @@ public class App {
 
             @Override
             public int compare(Animal o1, Animal o2) {
-                return o1.name.compareTo(o2.name);
+                return o1.getName().compareTo(o2.getName());
             }
             
         });
@@ -69,6 +73,27 @@ public class App {
         System.out.println(Arrays.toString(animals.toArray()));
 
         System.out.println("\n\n");
+
+        LinkedList<Integer> integers = new LinkedList<>();
+        
+        for(int i = 0; i < AMOUNT; i++) {
+            integers.add(i + 1);
+        }
+
+        Factory f = new Factory();
+
+        RandomIterator.RandomNumberIterator rintegers = new RandomIterator.RandomNumberIterator(AMOUNT, 0, 50);
+
+        List<Double> rdoubles = f.produce(integers, new Function<Integer, Double>(){
+
+            @Override
+            public Double apply(Integer t) {
+                return Math.sqrt(Math.pow(t.intValue(), 2) + Math.pow(rintegers.next(), 2));
+            }
+            
+        });
+
+        System.out.println(Arrays.toString(rdoubles.toArray()));
 
     }
 }
