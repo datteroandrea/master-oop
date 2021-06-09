@@ -1,6 +1,5 @@
 import java.util.*;
 import java.util.function.Function;
-
 import animali.Animal;
 import fabbrica.Factory;
 
@@ -91,6 +90,12 @@ public class App {
                 return Math.sqrt(Math.pow(t.intValue(), 2) + Math.pow(rintegers.next(), 2));
             }
             
+        });
+
+        // altro modo per scrivere la parte precedente
+
+        List<Double> rdoubles1 = f.produce(integers, (t)->{
+            return Math.sqrt(Math.pow(t.intValue(), 2) + Math.pow(rintegers.next(), 2));
         });
 
         System.out.println(Arrays.toString(rdoubles.toArray()));
