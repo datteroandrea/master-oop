@@ -1,7 +1,8 @@
+package animali;
 
 public class Animal {
-    protected int age;
-    protected String name;
+    private int age;
+    private String name;
 
     public Animal(int age, String name) {
         this.age = age;
@@ -40,6 +41,14 @@ public class Animal {
             //TODO Auto-generated constructor stub
         }
         
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }
