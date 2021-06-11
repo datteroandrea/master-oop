@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    "lib": true,
+    ".vscode": true,
+    "README.md": true,
+    "src\\fantasia": true
+  }
+}
