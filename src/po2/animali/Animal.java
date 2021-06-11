@@ -1,4 +1,4 @@
-package animali;
+package po2.animali;
 
 public class Animal {
     private int age;
