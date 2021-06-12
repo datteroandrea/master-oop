@@ -133,12 +133,33 @@ public class App {
 
         System.out.println("");
         */
-
+        /*
         for(int i = 0; i < 2; i++) {
             new ConsumerProducer.Consumer().start();
             new ConsumerProducer.Producer().start();
         }
+        */
 
+        Iterator<Future<Integer>> it = mapIteratorMultiThreading(List.of(1,2,3,4,5,6,7,8,9,10).iterator(), new Function<Integer,Integer>(){
+
+            @Override
+            public Integer apply(Integer t) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println(t);
+                return t;
+            }
+            
+        });
+
+        while(it.hasNext()) {
+            System.out.println(it.next());
+        }
+        System.out.println("finito");
     }
 
     // Creami una funzione mapIterator che prende Iterator<A>
@@ -190,6 +211,34 @@ public class App {
                     
                 });
                 return future;
+            }
+            
+        };
+    }
+
+    public static <A,B> Iterator<Supplier<B>> mapIteratorMultiThreading2(Iterator<A> iterA, Function<A,B> func) {
+        return new Iterator<Supplier<B>>() {
+            
+            @Override
+            public boolean hasNext() {
+                return iterA.hasNext();
+            }
+
+            @Override
+            public Supplier<B> next() {
+                Supplier<B>[] supp = new Supplier[1];
+                new Thread(() -> {
+                    B val = func.apply(iterA.next());
+                    supp[0] = new Supplier<B>(){
+
+                        @Override
+                        public B get() {
+                            return val;
+                        }
+                        
+                    };
+                }).start();
+                return supp[0];
             }
             
         };
