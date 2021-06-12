@@ -3,17 +3,20 @@ import java.util.*;
 import java.util.function.*;
 import po2.animali.*;
 import po2.exercises.*;
+import po2.exercises.ConsumerProducer.Producer;
 
 public class App {
     private static int AMOUNT = 10;
 
     public static void main(String[] args) throws Exception {
+        /*
         LinkedList<Animal> animals = new LinkedList<>();
-        RandomIterator.RandomNumberIterator rage = new RandomIterator.RandomNumberIterator(AMOUNT, 0, 50);
-        RandomIterator.RandomStringIterator rname = new RandomIterator.RandomStringIterator(AMOUNT, 10, "abcdefgjkhilmnopqrstuxwxyz");
+        Iterator<Integer> rage = new RandomSequence.RandomIntegerSequence(AMOUNT, 100).iterator();
+
+        Iterator<String> rss = new RandomSequence.RandomStringSequence(AMOUNT, 10, "abcdefghijklmnopqrstuvwxyz").iterator();
 
         for(int i = 0; i < AMOUNT; i++) {
-            animals.add(new Animal(((Number)rage.next()).intValue(), rname.next()));
+            animals.add(new Animal(rage.next(), rss.next()));
         }
 
         // ordina in ordine crescente
@@ -80,14 +83,6 @@ public class App {
             integers.add(i + 1);
         }
 
-        RandomSequence rs = new RandomSequence(AMOUNT, AMOUNT);
-
-        for(Integer i : rs) {
-            System.out.println(i);
-        }
-        
-        System.out.println("");
-
         FibonacciIterator fibit = new FibonacciIterator(10);
 
         while(fibit.hasNext()) {
@@ -130,7 +125,14 @@ public class App {
         }
 
         System.out.println("");
+        */
+        LinkedList<ConsumerProducer.Consumer> consumList = new LinkedList<>();
+        LinkedList<ConsumerProducer.Producer> prodList = new LinkedList<>();
 
+        for(int i = 0; i < 2; i++) {
+            new ConsumerProducer.Consumer().start();
+            new ConsumerProducer.Producer().start();
+        }
 
     }
 
