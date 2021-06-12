@@ -1,5 +1,12 @@
 package po2;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.*;
 import po2.animali.*;
 import po2.exercises.*;
@@ -126,8 +133,6 @@ public class App {
 
         System.out.println("");
         */
-        LinkedList<ConsumerProducer.Consumer> consumList = new LinkedList<>();
-        LinkedList<ConsumerProducer.Producer> prodList = new LinkedList<>();
 
         for(int i = 0; i < 2; i++) {
             new ConsumerProducer.Consumer().start();
@@ -165,6 +170,29 @@ public class App {
         return res;
     }
 
-    // scrivi un consumer producer senza BlockingQueue gestisci manualmente la concorrenza
+    public static <A,B> Iterator<Future<B>> mapIteratorMultiThreading(Iterator<A> iterA, Function<A,B> func) {
+        return new Iterator<Future<B>>() {
+            
+            @Override
+            public boolean hasNext() {
+                return iterA.hasNext();
+            }
+
+            @Override
+            public Future<B> next() {
+                ExecutorService exs = Executors.newSingleThreadExecutor();
+                Future<B> future = exs.submit(new Callable<B>(){
+
+                    @Override
+                    public B call() throws Exception {
+                        return func.apply(iterA.next());
+                    }
+                    
+                });
+                return future;
+            }
+            
+        };
+    }
 
 }
