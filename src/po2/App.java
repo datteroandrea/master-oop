@@ -15,8 +15,8 @@ import po2.exercises.ConsumerProducer.Producer;
 public class App {
     private static int AMOUNT = 10;
 
+
     public static void main(String[] args) throws Exception {
-        /*
         LinkedList<Animal> animals = new LinkedList<>();
         Iterator<Integer> rage = new RandomSequence.RandomIntegerSequence(AMOUNT, 100).iterator();
 
@@ -132,13 +132,12 @@ public class App {
         }
 
         System.out.println("");
-        */
-        /*
+        
         for(int i = 0; i < 2; i++) {
             new ConsumerProducer.Consumer().start();
             new ConsumerProducer.Producer().start();
         }
-        */
+        
 
         Iterator<Future<Integer>> it = mapIteratorMultiThreading(List.of(1,2,3,4,5,6,7,8,9,10).iterator(), new Function<Integer,Integer>(){
 
@@ -216,6 +215,7 @@ public class App {
         };
     }
 
+    @SuppressWarnings("unchecked")
     public static <A,B> Iterator<Supplier<B>> mapIteratorMultiThreading2(Iterator<A> iterA, Function<A,B> func) {
         return new Iterator<Supplier<B>>() {
             
