@@ -23,15 +23,12 @@ public class ResourceAllocator {
         }
     }
 
+    @SuppressWarnings("unused")
     private static class Resource<T> {
-        private T elem;
+        public final T elem;
 
         public Resource(T elem) {
             this.elem = elem;
-        }
-
-        public T getElem() {
-            return elem;
         }
     }
     
