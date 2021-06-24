@@ -8,6 +8,24 @@ import java.util.concurrent.Future;
 import java.util.function.*;
 
 public class Functional {
+
+    // creami una funzione mapIterator che mi prende un iteratore di A e mi ritorna un iteratore di B
+    // applicandoci la funzione f
+    public static <A, B> Iterator<B> mapIterator(Iterator<A> it, Function<? super A, ? extends B> f) {
+
+        return new Iterator<B>() {
+            @Override
+            public boolean hasNext() {
+                return it.hasNext();
+            }
+
+            @Override
+            public B next() {
+                return f.apply(it.next());
+            }
+        };
+    }
+
     // Creami una funzione mapIterator che prende Iterator<A>
     // e ci applica la funzione f se lancia un'eccezione f.apply(x) ritorna un B da supply.
     public static <A,B> Iterator<B> mapIterator(Iterator<A> iterA, Function<A,B> func, Supplier<B> supp) {
