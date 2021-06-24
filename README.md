@@ -3,7 +3,7 @@
 The workspace contains two folders by default, where:
 
 - `src/po2`: contiene esercizi e design patterns chiesti durante gli orali di PO2
-- `lib`: the folder to maintain dependencies
+- `.vscode`: the folder to maintain vscode related stuff
 
 ## src/po2
 
