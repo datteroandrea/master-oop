@@ -10,7 +10,3 @@ The workspace contains two folders by default, where:
 - `App.java`: è il main dove vengono eseguiti tutti i test
 - `exercises`: contiene la lista di esercizi chiesti durante l'orale di PO2
 - `patterns`: contiene i 3 patterns visti a lezione
-
-## Dependency Management
-
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
