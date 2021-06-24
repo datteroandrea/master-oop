@@ -1,4 +1,4 @@
-package po2.examples;
+package po2.exercises;
 
 import java.util.*;
 

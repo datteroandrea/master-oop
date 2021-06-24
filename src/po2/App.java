@@ -1,20 +1,64 @@
 package po2;
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.function.*;
-import po2.animali.*;
 import po2.exercises.*;
-import po2.exercises.ConsumerProducer.Producer;
 
 public class App {
     private static int AMOUNT = 10;
 
+    public static class Animal {
+        private int age;
+        private String name;
+    
+        public Animal(int age, String name) {
+            this.age = age;
+            this.name = name;
+        }
+    
+        @Override
+        public String toString() {
+            return String.format("{ age: %d, name: %s}", age, name);
+        }
+    
+        public static class Human extends Animal {
+    
+            protected final String surname;
+    
+            public Human(int age, String name, String surname) {
+                super(age, name);
+                this.surname = surname;
+            }
+    
+        }
+    
+        public static class Dog extends Animal {
+    
+            public Dog(int age, String name) {
+                super(age, name);
+                //TODO Auto-generated constructor stub
+            }
+            
+        }
+    
+        public static class Cat extends Animal {
+    
+            public Cat(int age, String name) {
+                super(age, name);
+                //TODO Auto-generated constructor stub
+            }
+            
+        }
+    
+        public int getAge() {
+            return age;
+        }
+    
+        public String getName() {
+            return name;
+        }
+    
+    }
 
     public static void main(String[] args) throws Exception {
         LinkedList<Animal> animals = new LinkedList<>();
@@ -110,7 +154,7 @@ public class App {
 
         System.out.println("");
 
-        System.out.println(sum(revArrayList, 0, new BiFunction<Integer,Integer,Integer>(){
+        System.out.println(Functional.sum(revArrayList, 0, new BiFunction<Integer,Integer,Integer>(){
 
             @Override
             public Integer apply(Integer t, Integer u) {
@@ -139,7 +183,7 @@ public class App {
         }
         
 
-        Iterator<Future<Integer>> it = mapIteratorMultiThreading(List.of(1,2,3,4,5,6,7,8,9,10).iterator(), new Function<Integer,Integer>(){
+        Iterator<Future<Integer>> it = Functional.mapIteratorMultiThreading(List.of(1,2,3,4,5,6,7,8,9,10).iterator(), new Function<Integer,Integer>(){
 
             @Override
             public Integer apply(Integer t) {
@@ -159,89 +203,6 @@ public class App {
             System.out.println(it.next());
         }
         System.out.println("finito");
-    }
-
-    // Creami una funzione mapIterator che prende Iterator<A>
-    // e ci applica la funzione f se lancia un'eccezione f.apply(x) ritorna un B da supply.
-    public static <A,B> Iterator<B> mapIterator(Iterator<A> iterA, Function<A,B> func, Supplier<B> supp) {
-        return new Iterator<B>(){
-            @Override
-            public boolean hasNext() {
-                return iterA.hasNext();
-            }
-
-            @Override
-            public B next() {
-                try {
-                    return func.apply(iterA.next());
-                } catch(Exception e) {
-                    return supp.get();
-                }
-            }
-            
-        };
-    }
-
-    public static <A> A sum(Iterable<A> iterA, A first, BiFunction<A,A,A> funcA) {
-        A res = first;
-        for(A a : iterA) {
-            res = funcA.apply(res, a);
-        }
-        return res;
-    }
-
-    public static <A,B> Iterator<Future<B>> mapIteratorMultiThreading(Iterator<A> iterA, Function<A,B> func) {
-        return new Iterator<Future<B>>() {
-            
-            @Override
-            public boolean hasNext() {
-                return iterA.hasNext();
-            }
-
-            @Override
-            public Future<B> next() {
-                ExecutorService exs = Executors.newSingleThreadExecutor();
-                Future<B> future = exs.submit(new Callable<B>(){
-
-                    @Override
-                    public B call() throws Exception {
-                        return func.apply(iterA.next());
-                    }
-                    
-                });
-                return future;
-            }
-            
-        };
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <A,B> Iterator<Supplier<B>> mapIteratorMultiThreading2(Iterator<A> iterA, Function<A,B> func) {
-        return new Iterator<Supplier<B>>() {
-            
-            @Override
-            public boolean hasNext() {
-                return iterA.hasNext();
-            }
-
-            @Override
-            public Supplier<B> next() {
-                Supplier<B>[] supp = new Supplier[1];
-                new Thread(() -> {
-                    B val = func.apply(iterA.next());
-                    supp[0] = new Supplier<B>(){
-
-                        @Override
-                        public B get() {
-                            return val;
-                        }
-                        
-                    };
-                }).start();
-                return supp[0];
-            }
-            
-        };
     }
 
 }
